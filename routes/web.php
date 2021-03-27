@@ -12,14 +12,11 @@
 */
 
 
-Route::get('/', function () {
-    return view('index');
-});
+Route::get('/','MainController@index');
 
-Route::get('/categories', function () {
-    return view('categories');
-});
+Route::get('/categories','MainController@categories');
 
-Route::get('/mobiles/iphone_x_64', function () {
-    return view('product');
-});
+Route::get('/{category}','MainController@category');
+
+Route::get('/mobiles/{product?}','MainController@product');
+
