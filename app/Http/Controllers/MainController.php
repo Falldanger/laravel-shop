@@ -30,14 +30,4 @@ class MainController extends Controller
     {
         return view('product', compact('product'));
     }
-
-    public function basket()
-    {
-        return view('basket');
-    }
-
-    public function basketPlace()
-    {
-        return view('order');
-    }
 }

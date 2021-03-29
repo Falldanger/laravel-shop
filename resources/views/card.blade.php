@@ -12,12 +12,14 @@
                 <p>{{$product->category->code}}</p>
             @endisset
             <p>
-            <form action="{{route('basket')}}" method="POST">
+            <form action="{{route('basket-add',$product)}}" method="POST">
                 <button type="submit" class="btn btn-primary" role="button">В корзину</button>
                 <a href="{{route('product',[$product->category->code,$product->code])}}"
                    class="btn btn-default"
                    role="button">Подробнее</a>
-                <input type="hidden" name="_token" value="WttEdroQWDkPWgS7dk3KjUwovEU7aoIP3konNeHm"></form>
+                <input type="hidden" name="_token" value="WttEdroQWDkPWgS7dk3KjUwovEU7aoIP3konNeHm">
+                @csrf
+            </form>
             </p>
         </div>
     </div>
