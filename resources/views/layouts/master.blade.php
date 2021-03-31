@@ -41,8 +41,14 @@
             </ul>
 
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="http://internet-shop.tmweb.ru/login">Войти</a></li>
-
+                @guest
+                    <li class="nav-item"><a href="{{route('login')}}">Войти</a></li>
+                    <li class="nav-item"><a href="{{route('register')}}">Зарегистрироваться</a></li>
+                @endguest
+                @auth
+                    <li class="nav-item"><a href="{{route('home')}}">Панель администрирования</a></li>
+                    <li class="nav-item"><a href="{{route('get-logout')}}">Выйти</a></li>
+                @endauth
             </ul>
         </div>
     </div>
