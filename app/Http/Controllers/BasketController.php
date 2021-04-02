@@ -62,6 +62,12 @@ class BasketController extends Controller
         } else {
             $order->products()->attach($productId);
         }
+
+        if (auth()->check()) {
+            $order->user_id = auth()->id();
+            $order->save();
+        }
+
         $product = Product::find($productId);
 
         session()->flash('success', 'Добавлен товар ' . $product->name);
