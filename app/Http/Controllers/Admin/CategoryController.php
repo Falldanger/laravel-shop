@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Category;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 /**
  * Class CategoryController
@@ -36,19 +37,22 @@ class CategoryController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\RedirectResponse
      */
     public function store(Request $request)
     {
-        Category::create($request->all());
+        $path = $request->file('image')->store('categories');
+        $params = $request->all();
+        $params['image'] = $path;
+        Category::create($params);
         return redirect()->route('categories.index');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Category  $category
+     * @param \App\Category $category
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function show(Category $category)
@@ -59,7 +63,7 @@ class CategoryController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Category  $category
+     * @param \App\Category $category
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function edit(Category $category)
@@ -70,20 +74,25 @@ class CategoryController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Category  $category
+     * @param \Illuminate\Http\Request $request
+     * @param \App\Category $category
      * @return \Illuminate\Http\RedirectResponse
      */
     public function update(Request $request, Category $category)
     {
-        $category->update($request->all());
+        Storage::delete($category->image);
+        $path = $request->file('image')->store('categories');
+        $params = $request->all();
+        $params['image'] = $path;
+
+        $category->update($params);
         return redirect()->route('categories.index');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Category  $category
+     * @param \App\Category $category
      * @return \Illuminate\Http\RedirectResponse
      */
     public function destroy(Category $category)
