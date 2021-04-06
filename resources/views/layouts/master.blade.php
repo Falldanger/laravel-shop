@@ -23,10 +23,11 @@
         </div>
         <div id="navbar" class="collapse navbar-collapse">
             <ul class="nav navbar-nav">
-                <li class="active"><a href="{{route('index')}}">Все товары</a></li>
-                <li><a href="{{route('categories')}}">Категории</a>
+                <li @routeactive('index')><a href="{{route('index')}}">Все
+                        товары</a></li>
+                <li @routeactive('categor*')><a href="{{route('categories')}}">Категории</a>
                 </li>
-                <li><a href="{{route('basket')}}">В корзину</a></li>
+                <li @routeactive('basket*')><a href="{{route('basket')}}">В корзину</a></li>
                 <li><a href="{{route('index')}}">Сбросить проект в начальное состояние</a></li>
                 {{--                <li><a href="http://internet-shop.tmweb.ru/locale/en">en</a></li>--}}
 

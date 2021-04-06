@@ -29,11 +29,11 @@
 
             <div id="navbar" class="collapse navbar-collapse">
                 <ul class="nav navbar-nav">
-                    <li><a
-                            href="{{route('categories.index')}}">Категории</a></li>
-                    <li><a href="{{route('products.index')}}">Товары</a>
-                    </li>
+                    @admin
+                    <li><a href="{{route('categories.index')}}">Категории</a></li>
+                    <li><a href="{{route('products.index')}}">Товары</a></li>
                     <li><a href="{{route('home')}}">Заказы</a></li>
+                    @endadmin
                 </ul>
 
                 @guest
@@ -53,7 +53,7 @@
                             <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
                                data-toggle="dropdown"
                                aria-haspopup="true" aria-expanded="false">
-                                Администратор
+                                @admin Администратор @else {{ auth()->user()->name }} @endadmin
                             </a>
 
                             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">

@@ -22,7 +22,11 @@ class LoginController extends Controller
 
     protected function redirectTo()
     {
-        return route('home');
+        if (auth()->user()->isAdmin()) {
+            return route('home');
+        } else {
+            return route('person.orders.index');
+        }
     }
 
     /**
