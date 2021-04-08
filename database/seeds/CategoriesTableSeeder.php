@@ -14,19 +14,22 @@ class CategoriesTableSeeder extends Seeder
     {
         DB::table('categories')->insert([
             [
-                'name'=>'Мобильные телефоны',
-                'code'=>'mobiles',
-                'description'=>'Описание категории моб.телефонов'
+                'name' => 'Мобильные телефоны',
+                'code' => 'mobiles',
+                'description' => 'В этом разделе вы найдёте самые популярные мобильные телефонамы по отличным ценам!',
+                'image' => 'categories/mobile.jpg',
             ],
             [
-                'name'=>'Портативная техника',
-                'code'=>'portable',
-                'description'=>'Описание категории порт.техника'
+                'name' => 'Портативная техника',
+                'code' => 'portable',
+                'description' => 'Раздел с портативной техникой.',
+                'image' => 'categories/portable.jpg',
             ],
             [
-                'name'=>'Бытовая техника',
-                'code'=>'technics',
-                'description'=>'Описание категории быт.техника'
+                'name' => 'Бытовая техника',
+                'code' => 'appliances',
+                'description' => 'Раздел с бытовой техникой',
+                'image' => 'categories/appliance.jpg',
             ],
         ]);
     }
