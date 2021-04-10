@@ -13,7 +13,7 @@ class Product extends Model
     /**
      * @var string[]
      */
-    protected $fillable = ['name', 'code', 'price', 'category_id', 'description', 'image', 'new', 'hit', 'recommend'];
+    protected $fillable = ['name', 'code', 'price', 'category_id', 'description', 'image', 'hit', 'new', 'recommend'];
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
@@ -32,6 +32,30 @@ class Product extends Model
             return $this->pivot->count * $this->price;
         }
         return $this->price;
+    }
+
+    /**
+     * @param $value
+     */
+    public function setNewAttribute($value)
+    {
+        $this->attributes['new'] = $value === 'on' ? 1 : 0;
+    }
+
+    /**
+     * @param $value
+     */
+    public function setHitAttribute($value)
+    {
+        $this->attributes['hit'] = $value === 'on' ? 1 : 0;
+    }
+
+    /**
+     * @param $value
+     */
+    public function setRecommendAttribute($value)
+    {
+        $this->attributes['recommend'] = $value === 'on' ? 1 : 0;
     }
 
     /**
