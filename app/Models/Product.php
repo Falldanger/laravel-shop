@@ -6,7 +6,18 @@ use Illuminate\Database\Eloquent\Model;
 
 class Product extends Model
 {
-    protected $fillable = ['name', 'code', 'price', 'category_id', 'description', 'image', 'hit', 'new', 'recommend'];
+    protected $fillable = [
+        'name',
+        'code',
+        'price',
+        'category_id',
+        'description',
+        'image',
+        'hit',
+        'new',
+        'recommend',
+        'count'
+    ];
 
     public function category()
     {
@@ -64,5 +75,10 @@ class Product extends Model
     public function isRecommend()
     {
         return $this->recommend === 1;
+    }
+
+    public function isAvailable()
+    {
+        return $this->count > 0;
     }
 }

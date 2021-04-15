@@ -9,7 +9,7 @@
                 <div class="panel">
                     <h1>Заказ №{{ $order->id }}</h1>
                     <p>Заказчик: <b>{{ $order->name }}</b></p>
-                    <p>Номер теелфона: <b>{{ $order->phomne }}</b></p>
+                    <p>Номер теелфона: <b>{{ $order->phone }}</b></p>
                     <table class="table table-striped">
                         <thead>
                         <tr>
@@ -36,7 +36,7 @@
                         @endforeach
                         <tr>
                             <td colspan="3">Общая стоимость:</td>
-                            <td>{{ $order->getFullPrice() }} руб.</td>
+                            <td>{{ $order->calculateFullSum() }} руб.</td>
                         </tr>
                         </tbody>
                     </table>
