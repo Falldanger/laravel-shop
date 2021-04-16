@@ -9,7 +9,8 @@ use Illuminate\Http\Request;
 
 class MainController extends Controller
 {
-    public function index(ProductsFilterRequest $request) {
+    public function index(ProductsFilterRequest $request)
+    {
         $productsQuery = Product::with('category');
 
         if ($request->filled('price_from')) {
@@ -31,17 +32,21 @@ class MainController extends Controller
         return view('index', compact('products'));
     }
 
-    public function categories() {
+    public function categories()
+    {
         $categories = Category::get();
         return view('categories', compact('categories'));
     }
 
-    public function category($code) {
+    public function category($code)
+    {
         $category = Category::where('code', $code)->first();
         return view('category', compact('category'));
     }
 
-    public function product($category, $product = null) {
-        return view('product', ['product' => $product]);
+    public function product($category, $productCode)
+    {
+        $product = Product::withTrashed()->ByCode($productCode)->first();
+        return view('product', compact('product'));
     }
 }

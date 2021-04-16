@@ -3,9 +3,12 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Product extends Model
 {
+    use SoftDeletes;
+
     protected $fillable = [
         'name',
         'code',
@@ -30,6 +33,11 @@ class Product extends Model
             return $this->pivot->count * $this->price;
         }
         return $this->price;
+    }
+
+    public function scopeByCode($query, $code)
+    {
+        return $query->where('code', $code);
     }
 
     public function scopeHit($query)
@@ -79,6 +87,6 @@ class Product extends Model
 
     public function isAvailable()
     {
-        return $this->count > 0;
+        return !$this->trashed() && $this->count > 0;
     }
 }

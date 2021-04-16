@@ -15,6 +15,7 @@ class AlterTableProductsCount extends Migration
     {
         Schema::table('products', function (Blueprint $table) {
             $table->unsignedInteger('count')->default(0);
+            $table->softDeletes();
         });
     }
 
@@ -27,6 +28,7 @@ class AlterTableProductsCount extends Migration
     {
         Schema::table('products', function (Blueprint $table) {
             $table->dropColumn('count');
+            $table->dropColumn('deleted_at');
         });
     }
 }
