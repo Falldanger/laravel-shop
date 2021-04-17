@@ -12,19 +12,16 @@ class BasketController extends Controller
     public function basket()
     {
         $orderId = session('orderId');
-        if (!is_null($orderId)) {
-            $order = Order::findOrFail($orderId);
-        }
+
+        $order = Order::findOrFail($orderId);
+
         return view('basket', compact('order'));
     }
 
     public function basketConfirm(Request $request)
     {
         $orderId = session('orderId');
-        if (is_null($orderId)) {
-            return redirect()->route('index');
-        }
-        $order = Order::find($orderId);
+        $order = Order::findOrFail($orderId);
         $success = $order->saveOrder($request->name, $request->phone);
 
         if ($success) {
@@ -41,14 +38,11 @@ class BasketController extends Controller
     public function basketPlace()
     {
         $orderId = session('orderId');
-        if (is_null($orderId)) {
-            return redirect()->route('index');
-        }
-        $order = Order::find($orderId);
+        $order = Order::findOrFail($orderId);
         return view('order', compact('order'));
     }
 
-    public function basketAdd($productId)
+    public function basketAdd(Product $product)
     {
         $orderId = session('orderId');
 
@@ -56,23 +50,21 @@ class BasketController extends Controller
             $order = Order::create();
             session(['orderId' => $order->id]);
         } else {
-            $order = Order::find($orderId);
+            $order = Order::findOrFail($orderId);
         }
 
-        if ($order->products->contains($productId)) {
-            $pivotRow = $order->products()->where('product_id', $productId)->first()->pivot;
+        if ($order->products->contains($product->id)) {
+            $pivotRow = $order->products()->where('product_id', $product->id)->first()->pivot;
             $pivotRow->count++;
             $pivotRow->update();
         } else {
-            $order->products()->attach($productId);
+            $order->products()->attach($product->id);
         }
 
         if (Auth::check()) {
             $order->user_id = Auth::id();
             $order->save();
         }
-
-        $product = Product::find($productId);
 
         Order::changeFullSum($product->price);
 
@@ -81,25 +73,20 @@ class BasketController extends Controller
         return redirect()->route('basket');
     }
 
-    public function basketRemove($productId)
+    public function basketRemove(Product $product)
     {
         $orderId = session('orderId');
-        if (is_null($orderId)) {
-            return redirect()->route('basket');
-        }
-        $order = Order::find($orderId);
+        $order = Order::findOrFail($orderId);
 
-        if ($order->products->contains($productId)) {
-            $pivotRow = $order->products()->where('product_id', $productId)->first()->pivot;
+        if ($order->products->contains($product->id)) {
+            $pivotRow = $order->products()->where('product_id', $product->id)->first()->pivot;
             if ($pivotRow->count < 2) {
-                $order->products()->detach($productId);
+                $order->products()->detach($product->id);
             } else {
                 $pivotRow->count--;
                 $pivotRow->update();
             }
         }
-
-        $product = Product::find($productId);
 
         Order::changeFullSum(-$product->price);
 
