@@ -22,7 +22,7 @@ class BasketController extends Controller
         if ((new Basket())->saveOrder($request->name, $request->phone)) {
             session()->flash('success', 'Ваш заказ принят в обработку!');
         } else {
-            session()->flash('warning', 'Случилась ошибка');
+            session()->flash('warning', 'Товар недоступен для заказа в полном объеме');
         }
 
         Order::eraseOrderSum();
@@ -32,7 +32,12 @@ class BasketController extends Controller
 
     public function basketPlace()
     {
-        $order = (new Basket())->getOrder();
+        $basket = new Basket();
+        $order = $basket->getOrder();
+        if (!$basket->countAvailable()){
+            session()->flash('warning', 'Товар недоступен для заказа в полном объеме');
+            return redirect()->route('basket');
+        }
         return view('order', compact('order'));
     }
 

@@ -36,12 +36,25 @@ class Basket
 
     public function saveOrder($name, $phone)
     {
+        if (!$this->countAvailable()) {
+            return false;
+        }
         return $this->order->saveOrder($name, $phone);
     }
 
     protected function getPivotRow($product)
     {
         return $this->order->products()->where('product_id', $product->id)->first()->pivot;
+    }
+
+    public function countAvailable()
+    {
+        foreach ($this->order->products as $orderProduct) {
+            if ($orderProduct->count < $this->getPivotRow($orderProduct)->count) {
+                return false;
+            }
+        }
+        return true;
     }
 
     public function removeProduct(Product $product)
