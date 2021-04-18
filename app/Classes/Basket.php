@@ -34,25 +34,31 @@ class Basket
         return $this->order;
     }
 
-    public function saveOrder($name, $phone)
-    {
-        if (!$this->countAvailable()) {
-            return false;
-        }
-        return $this->order->saveOrder($name, $phone);
-    }
-
     protected function getPivotRow($product)
     {
         return $this->order->products()->where('product_id', $product->id)->first()->pivot;
     }
 
-    public function countAvailable()
+    public function saveOrder($name, $phone)
+    {
+        if (!$this->countAvailable(true)) {
+            return false;
+        }
+        return $this->order->saveOrder($name, $phone);
+    }
+
+    public function countAvailable($updateCount = false)
     {
         foreach ($this->order->products as $orderProduct) {
             if ($orderProduct->count < $this->getPivotRow($orderProduct)->count) {
                 return false;
             }
+            if ($updateCount) {
+                $orderProduct->count -= $this->getPivotRow($orderProduct)->count;
+            }
+        }
+        if ($updateCount) {
+            $this->order->products->map->save();
         }
         return true;
     }
