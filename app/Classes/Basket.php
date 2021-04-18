@@ -2,8 +2,10 @@
 
 namespace App\Classes;
 
+use App\Mail\OrderCreated;
 use App\Models\Order;
 use App\Models\Product;
+use Illuminate\Support\Facades\Mail;
 
 class Basket
 {
@@ -39,11 +41,12 @@ class Basket
         return $this->order->products()->where('product_id', $product->id)->first()->pivot;
     }
 
-    public function saveOrder($name, $phone)
+    public function saveOrder($name, $phone, $email)
     {
         if (!$this->countAvailable(true)) {
             return false;
         }
+        Mail::to($email)->send(new OrderCreated($name, $this->getOrder()));
         return $this->order->saveOrder($name, $phone);
     }
 
