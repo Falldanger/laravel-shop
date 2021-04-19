@@ -12,7 +12,7 @@ class ProductObserver
         $oldCount = $product->getOriginal('count');
 
         if ($oldCount == 0 && $product->count > 0) {
-            Subscription::sendEmailsBySubscription($product);
+            Subscription::sendEmailBySubscription($product);
         }
     }
 }
