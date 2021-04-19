@@ -18,12 +18,16 @@
     @else
         <span>Не доступен</span>
         <br>
-        <span>Сообщить мне, когда товар появиться в наличии</span>
-        <form action="{{route('subscription',$product)}}" method="POST">
+        <span>Сообщить мне, когда товар появится в наличии:</span>
+        <div class="warning">
+            @if($errors->get('email'))
+                {!! $errors->get('email')[0] !!}
+            @endif
+        </div>
+        <form method="POST" action="{{ route('subscription', $product) }}">
+            @csrf
             <input type="email" name="email">
             <button type="submit">Отправить</button>
-            @csrf
-
         </form>
     @endif
 
