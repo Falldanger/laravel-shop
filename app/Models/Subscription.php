@@ -17,4 +17,12 @@ class Subscription extends Model
     {
         return $query->where('active', 0)->where('product_id', $productId);
     }
+
+    public static function sendEmailBySubscription(Product $product)
+    {
+        $subscriptions = self::activeByProductId($product->id)->get();
+        foreach ($subscriptions as $subscription){
+
+        }
+    }
 }

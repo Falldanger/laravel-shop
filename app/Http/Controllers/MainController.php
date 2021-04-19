@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use App\Models\Product;
 use App\Http\Requests\ProductsFilterRequest;
+use App\Models\Subscription;
 use Illuminate\Http\Request;
 
 class MainController extends Controller
@@ -48,5 +49,15 @@ class MainController extends Controller
     {
         $product = Product::withTrashed()->ByCode($productCode)->firstOrFail();
         return view('product', compact('product'));
+    }
+
+    public function subscribe(Request $request, Product $product)
+    {
+        Subscription::create([
+            'email' => $request->email,
+            'product_id' => $product->id
+        ]);
+
+        return redirect()->back()->with('success', 'Мы свяжемся с Вами, когда товар будет в наличии');
     }
 }

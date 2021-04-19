@@ -19,7 +19,7 @@
         <span>Не доступен</span>
         <br>
         <span>Сообщить мне, когда товар появиться в наличии</span>
-        <form action="" method="POST">
+        <form action="{{route('subscription',$product)}}" method="POST">
             <input type="email" name="email">
             <button type="submit">Отправить</button>
             @csrf
