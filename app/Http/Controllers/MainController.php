@@ -64,6 +64,7 @@ class MainController extends Controller
 
     public function changeLocale($locale)
     {
+        session(['locale' => $locale]);
         App::setLocale($locale);
         $currentLocale = App::getLocale();
 
