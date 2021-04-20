@@ -17,6 +17,8 @@ Auth::routes([
     'verify' => false,
 ]);
 
+Route::get('locale/{locale}','MainController@changeLocale')->name('locale');
+
 Route::get('reset', 'ResetController@reset')->name('reset');
 
 Route::get('/logout', 'Auth\LoginController@logout')->name('get-logout');

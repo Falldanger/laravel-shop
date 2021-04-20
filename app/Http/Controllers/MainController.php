@@ -7,6 +7,7 @@ use App\Models\Category;
 use App\Models\Product;
 use App\Http\Requests\ProductsFilterRequest;
 use App\Models\Subscription;
+use Illuminate\Support\Facades\App;
 
 class MainController extends Controller
 {
@@ -59,5 +60,13 @@ class MainController extends Controller
         ]);
 
         return redirect()->back()->with('success', 'Мы свяжемся с Вами, когда товар будет в наличии');
+    }
+
+    public function changeLocale($locale)
+    {
+        App::setLocale($locale);
+        $currentLocale = App::getLocale();
+
+        return redirect()->back();
     }
 }
