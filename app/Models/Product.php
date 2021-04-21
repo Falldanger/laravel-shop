@@ -8,8 +8,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Product extends Model
 {
-    use Translatable;
-    use SoftDeletes;
+    use SoftDeletes, Translatable;
 
     protected $fillable = [
         'name',
