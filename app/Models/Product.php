@@ -2,11 +2,13 @@
 
 namespace App\Models;
 
+use App\Models\Traits\Translatable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Product extends Model
 {
+    use Translatable;
     use SoftDeletes;
 
     protected $fillable = [
@@ -19,7 +21,9 @@ class Product extends Model
         'hit',
         'new',
         'recommend',
-        'count'
+        'count',
+        'name_en',
+        'description_en'
     ];
 
     public function category()

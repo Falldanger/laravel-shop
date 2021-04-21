@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Traits\Translatable;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -10,11 +11,19 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Category extends Model
 {
+    use Translatable;
 
     /**
      * @var string[]
      */
-    protected $fillable = ['code', 'name', 'description', 'image'];
+    protected $fillable = [
+        'code',
+        'name',
+        'description',
+        'image',
+        'name_en',
+        'description_en'
+    ];
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
