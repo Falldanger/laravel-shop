@@ -1,6 +1,7 @@
 <?php
 
 return [
+    'dear' => 'Dear',
     'your_order' => 'Your order costs ',
-    'created' => ' created ',
+    'created' => ' was created',
 ];

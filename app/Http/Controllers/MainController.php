@@ -59,7 +59,7 @@ class MainController extends Controller
             'product_id' => $product->id
         ]);
 
-        return redirect()->back()->with('success', 'Мы свяжемся с Вами, когда товар будет в наличии');
+        return redirect()->back()->with('success', __('product.we_will_update'));
     }
 
     public function changeLocale($locale)

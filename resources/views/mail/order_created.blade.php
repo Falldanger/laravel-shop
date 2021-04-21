@@ -5,9 +5,9 @@
 <table>
     <thead>
     <tr>
-        <th>Название</th>
-        <th>Кол-во</th>
-        <th>Цена</th>
+        <th>@lang('product.name')</th>
+        <th>@lang('product.amount')</th>
+        <th>@lang('product.price')</th>
     </tr>
     </thead>
     <tbody>
@@ -24,8 +24,8 @@
                     {!! $product->description !!}
                 </div>
             </td>
-            <td>{{ $product->price }} руб.</td>
-            <td>{{ $product->getPriceForCount() }} руб.</td>
+            <td>{{ $product->price }} @lang('main.rub').</td>
+            <td>{{ $product->getPriceForCount() }} @lang('main.rub').</td>
         </tr>
     @endforeach
     </tbody>
