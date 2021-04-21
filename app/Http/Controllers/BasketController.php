@@ -22,7 +22,7 @@ class BasketController extends Controller
         $email = auth()->check() ? auth()->user()->email : $request->email;
 
         if ((new Basket())->saveOrder($request->name, $request->phone, $email)) {
-            session()->flash('success', 'Ваш заказ принят в обработку!');
+            session()->flash('success', __('basket.your_order_confirmed'));
         } else {
             session()->flash('warning', 'Товар недоступен для заказа в полном объеме');
         }
