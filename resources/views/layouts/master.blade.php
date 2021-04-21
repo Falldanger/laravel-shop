@@ -37,7 +37,7 @@
             <ul class="nav navbar-nav navbar-right">
                 @guest
                     <li><a href="{{ route('login') }}">@lang('main.login')</a></li>
-                @endguestцу
+                @endguest
 
                 @auth
                     @admin
