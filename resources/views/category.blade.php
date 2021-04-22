@@ -1,14 +1,14 @@
 @extends('layouts.master')
 
-@section('title',__('main.category').$category->name)
+@section('title',__('main.category').$category->__('name'))
 
 @section('content')
 
     <h1>
-        {{$category->name}}
+        {{$category->__('name')}}
     </h1>
     <p>
-        {{$category->description}}
+        {{$category->__('description')}}
     </p>
     <div class="row">
         @foreach($category->products as $product)
