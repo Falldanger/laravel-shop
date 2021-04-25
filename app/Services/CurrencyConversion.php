@@ -50,5 +50,10 @@ class CurrencyConversion
     public static function getBaseCurrencyCode()
     {
         self::loadContainer();
+        foreach (self::$container as $code => $currency) {
+            if ($currency->isMain()) {
+                return $currency;
+            }
+        }
     }
 }
