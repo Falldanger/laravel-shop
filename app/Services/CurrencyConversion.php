@@ -46,4 +46,9 @@ class CurrencyConversion
         $currency = self::$container[$currencyFromSession];
         return $currency->symbol;
     }
+
+    public static function getBaseCurrencyCode()
+    {
+        self::loadContainer();
+    }
 }
