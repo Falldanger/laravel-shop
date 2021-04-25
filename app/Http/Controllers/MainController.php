@@ -14,6 +14,7 @@ class MainController extends Controller
 {
     public function index(ProductsFilterRequest $request)
     {
+        \App\Services\CurrencyRates::getRates();
         $productsQuery = Product::with('category');
 
         if ($request->filled('price_from')) {

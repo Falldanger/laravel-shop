@@ -15,6 +15,6 @@ class Currency extends Model
 
     public function isMain()
     {
-        return $this->ismain === 1;
+        return $this->is_main === 1;
     }
 }
