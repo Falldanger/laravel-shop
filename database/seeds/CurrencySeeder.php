@@ -18,20 +18,20 @@ class CurrencySeeder extends Seeder
             [
                 'code' => 'RUB',
                 'symbol' => '₽',
-                'is_main' => 1,
-                'rate' => 1,
+                'is_main' => 0,
+                'rate' => 0,
             ],
             [
                 'code' => 'USD',
                 'symbol' => '$',
                 'is_main' => 0,
-                'rate' => 65,
+                'rate' => 0,
             ],
             [
                 'code' => 'EUR',
                 'symbol' => '€',
-                'is_main' => 0,
-                'rate' => 70,
+                'is_main' => 1,
+                'rate' => 1,
             ],
         ]);
     }
