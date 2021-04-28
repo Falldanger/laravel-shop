@@ -26,6 +26,8 @@ class Basket
 
             $this->order = new Order($data);
             session(['order' => $this->order]);
+        } else {
+            $this->order = $order;
         }
     }
 
