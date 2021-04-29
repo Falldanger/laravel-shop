@@ -16,9 +16,9 @@ class BasketIsNotEmpty
      */
     public function handle($request, Closure $next)
     {
-        $orderId = session('orderId');
+        $order = session('order');
 
-        if (!is_null($orderId) && Order::getFullSum() > 0) {
+        if (!is_null($order) && $order->getFullSum() > 0) {
             return $next($request);
         }
 

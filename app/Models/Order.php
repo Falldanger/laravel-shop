@@ -6,11 +6,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class Order extends Model
 {
-    protected $fillable = ['user_id','currency_id','sum'];
+    protected $fillable = ['user_id', 'currency_id', 'sum'];
 
     public function products()
     {
-        return $this->belongsToMany(Product::class)->withPivot(['count','price'])->withTimestamps();
+        return $this->belongsToMany(Product::class)->withPivot(['count', 'price'])->withTimestamps();
     }
 
     public function scopeActive($query)
@@ -32,15 +32,14 @@ class Order extends Model
         session()->forget('full_order_sum');
     }
 
-    public static function changeFullSum($changeSum)
+    public function getFullSum()
     {
-        $sum = self::getFullSum() + $changeSum;
-        session(['full_order_sum' => $sum]);
-    }
+        $sum = 1;
 
-    public static function getFullSum()
-    {
-        return session('full_order_sum', 0);
+        foreach ($this->products as $product) {
+            $sum += $product->price * $product->countInOrder;
+        }
+        return $sum;
     }
 
     public function saveOrder($name, $phone)

@@ -39,10 +39,10 @@ class Basket
         return $this->order;
     }
 
-    protected function getPivotRow($product)
-    {
-        return $this->order->products()->where('product_id', $product->id)->first()->pivot;
-    }
+//    protected function getPivotRow($product)
+//    {
+//        return $this->order->products()->where('product_id', $product->id)->first()->pivot;
+//    }
 
     public function saveOrder($name, $phone, $email)
     {
@@ -92,15 +92,14 @@ class Basket
             if ($pivotRow->count > $product->count) {
                 return false;
             }
-            $pivotRow->update();
+            $product->countInOrder++;
         } else {
             if ($product->count == 0) {
                 return false;
             }
-            $this->order->products()->attach($product->id);
+            $product->countInOrder = 1;
+            $this->order->products->push($product);
         }
-
-        Order::changeFullSum($product->price);
         return true;
     }
 }
