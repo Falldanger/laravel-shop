@@ -1,6 +1,6 @@
 <p>Уважаемый {{$name}}</p>
 
-<p>@lang('mail.order_created.your_order') {{$fullSum}} @lang('mail.order_created.created')</p>
+<p>@lang('mail/order_created.your_order') {{$fullSum}} @lang('mail/order_created.created')</p>
 
 <table>
     <thead>
