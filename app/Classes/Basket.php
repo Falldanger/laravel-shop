@@ -39,11 +39,6 @@ class Basket
         return $this->order;
     }
 
-//    protected function getPivotRow($product)
-//    {
-//        return $this->order->products()->where('product_id', $product->id)->first()->pivot;
-//    }
-
     public function saveOrder($name, $phone, $email)
     {
         if (!$this->countAvailable(true)) {
@@ -71,28 +66,24 @@ class Basket
 
     public function removeProduct(Product $product)
     {
-        if ($this->order->products->contains($product->id)) {
-            $pivotRow = $this->getPivotRow($product);
-            if ($pivotRow->count < 2) {
-                $this->order->products()->detach($product->id);
+        if ($this->order->products->contains($product)) {
+            $pivotRow = $this->order->products->where('id',$product->id)->first();
+            if ($pivotRow->countInOrder < 2) {
+                $this->order->products->pop($product);
             } else {
-                $pivotRow->count--;
-                $pivotRow->update();
+                $pivotRow->countInOrder--;
             }
         }
-
-        Order::changeFullSum(-$product->price);
     }
 
     public function addProduct(Product $product)
     {
-        if ($this->order->products->contains($product->id)) {
-            $pivotRow = $this->getPivotRow($product);
-            $pivotRow->count++;
-            if ($pivotRow->count > $product->count) {
+        if ($this->order->products->contains($product)) {
+            $pivotRow = $this->order->products->where('id',$product->id)->first();
+            if ($pivotRow->countInOrder >= $product->count) {
                 return false;
             }
-            $product->countInOrder++;
+            $pivotRow->countInOrder++;
         } else {
             if ($product->count == 0) {
                 return false;
