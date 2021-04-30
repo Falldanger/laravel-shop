@@ -6,23 +6,27 @@ use App\Mail\OrderCreated;
 use App\Models\Order;
 use App\Models\Product;
 use App\Services\CurrencyConversion;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 
 class Basket
 {
-
     protected $order;
 
+    /**
+     * Basket constructor.
+     * @param  bool  $createOrder
+     */
     public function __construct($createOrder = false)
     {
         $order = session('order');
 
         if (is_null($order) && $createOrder) {
             $data = [];
-            if (auth()->check()) {
-                $data['user_id'] = auth()->id();
+            if (Auth::check()) {
+                $data['user_id'] = Auth::id();
             }
-            $data['currency_id'] = CurrencyConversion::getCurrentCurrencyFromSession();
+            $data['currency_id'] = CurrencyConversion::getCurrentCurrencyFromSession()->id;
 
             $this->order = new Order($data);
             session(['order' => $this->order]);
@@ -39,35 +43,43 @@ class Basket
         return $this->order;
     }
 
+    public function countAvailable($updateCount = false)
+    {
+        $products = collect([]);
+        foreach ($this->order->products as $orderProduct)
+        {
+            $product = Product::find($orderProduct->id);
+            if ($orderProduct->countInOrder > $product->count) {
+                return false;
+            }
+
+            if ($updateCount) {
+                $product->count -= $orderProduct->countInOrder;
+                $products->push($product);
+            }
+        }
+
+        if ($updateCount) {
+            $products->map->save();
+        }
+
+        return true;
+    }
+
     public function saveOrder($name, $phone, $email)
     {
         if (!$this->countAvailable(true)) {
             return false;
         }
+        $this->order->saveOrder($name, $phone);
         Mail::to($email)->send(new OrderCreated($name, $this->getOrder()));
-        return $this->order->saveOrder($name, $phone);
-    }
-
-    public function countAvailable($updateCount = false)
-    {
-        foreach ($this->order->products as $orderProduct) {
-            if ($orderProduct->count < $this->getPivotRow($orderProduct)->count) {
-                return false;
-            }
-            if ($updateCount) {
-                $orderProduct->count -= $this->getPivotRow($orderProduct)->count;
-            }
-        }
-        if ($updateCount) {
-            $this->order->products->map->save();
-        }
         return true;
     }
 
     public function removeProduct(Product $product)
     {
         if ($this->order->products->contains($product)) {
-            $pivotRow = $this->order->products->where('id',$product->id)->first();
+            $pivotRow = $this->order->products->where('id', $product->id)->first();
             if ($pivotRow->countInOrder < 2) {
                 $this->order->products->pop($product);
             } else {
@@ -79,7 +91,7 @@ class Basket
     public function addProduct(Product $product)
     {
         if ($this->order->products->contains($product)) {
-            $pivotRow = $this->order->products->where('id',$product->id)->first();
+            $pivotRow = $this->order->products->where('id', $product->id)->first();
             if ($pivotRow->countInOrder >= $product->count) {
                 return false;
             }
@@ -91,6 +103,7 @@ class Basket
             $product->countInOrder = 1;
             $this->order->products->push($product);
         }
+
         return true;
     }
 }

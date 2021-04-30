@@ -27,10 +27,6 @@ class Order extends Model
         return $sum;
     }
 
-    public static function eraseOrderSum()
-    {
-        session()->forget('full_order_sum');
-    }
 
     public function getFullSum()
     {
@@ -44,15 +40,13 @@ class Order extends Model
 
     public function saveOrder($name, $phone)
     {
-        if ($this->status == 0) {
-            $this->name = $name;
-            $this->phone = $phone;
-            $this->status = 1;
-            $this->save();
-            session()->forget('orderId');
-            return true;
-        } else {
-            return false;
-        }
+
+        $this->name = $name;
+        $this->phone = $phone;
+        $this->status = 1;
+        $this->sum = $this->getFullSum();
+        $this->save();
+        session()->forget('order');
+        return true;
     }
 }
