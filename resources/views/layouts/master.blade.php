@@ -75,7 +75,9 @@
         <div class="row">
             <div class="col-lg-6"><p>Категории товаров</p>
                 <ul>
-                    <li><a href="/">Category</a></li>
+                    @foreach($categories as $category)
+                    <li><a href="{{route('category',$category->code)}}">{{$category->__('name')}}</a></li>
+                    @endforeach
                 </ul>
             </div>
             <div class="col-lg-6"><p>Самые популярные товары</p>
