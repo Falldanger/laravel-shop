@@ -13,7 +13,7 @@ class CurrencySeeder extends Seeder
     public function run()
     {
         DB::table('currencies')->truncate();
-        $updatedAt = \Illuminate\Support\Carbon::now();
+        $currentDate = \Illuminate\Support\Carbon::now();
 
         DB::table('currencies')->insert([
             [
@@ -21,21 +21,24 @@ class CurrencySeeder extends Seeder
                 'symbol' => '₽',
                 'is_main' => 0,
                 'rate' => 0,
-                'updated_at' => $updatedAt,
+                'updated_at' => $currentDate,
+                'created_at' => $currentDate,
             ],
             [
                 'code' => 'USD',
                 'symbol' => '$',
                 'is_main' => 0,
                 'rate' => 0,
-                'updated_at' => $updatedAt,
+                'updated_at' => $currentDate,
+                'created_at' => $currentDate,
             ],
             [
                 'code' => 'EUR',
                 'symbol' => '€',
                 'is_main' => 1,
                 'rate' => 1,
-                'updated_at' => $updatedAt,
+                'updated_at' => $currentDate,
+                'created_at' => $currentDate,
             ],
         ]);
     }
