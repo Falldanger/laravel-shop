@@ -52,3 +52,19 @@ footer{
     color: #99979c;
     background-color: #2a2730;
 }
+html,
+body {
+    height: 100%;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100%;
+}
+div.container {
+    flex: 1 0 auto;
+}
+footer {
+    flex: 0 0 auto;
+}
