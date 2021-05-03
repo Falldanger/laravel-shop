@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreatePropertiesTable extends Migration
+class CreatePropertyProduct extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,11 @@ class CreatePropertiesTable extends Migration
      */
     public function up()
     {
-        Schema::create('properties', function (Blueprint $table) {
+        Schema::create('property_product', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('name');
-            $table->string('name_en');
+            $table->unsignedInteger('product_id');
+            $table->unsignedInteger('property_id');
             $table->timestamps();
-            $table->softDeletes();
         });
     }
 
@@ -29,6 +28,6 @@ class CreatePropertiesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('properties');
+        Schema::dropIfExists('property_product');
     }
 }

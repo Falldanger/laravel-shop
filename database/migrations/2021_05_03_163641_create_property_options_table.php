@@ -15,7 +15,11 @@ class CreatePropertyOptionsTable extends Migration
     {
         Schema::create('property_options', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->unsignedInteger('property_id');
+            $table->string('name');
+            $table->string('name_en');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
