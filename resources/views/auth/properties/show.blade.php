@@ -1,10 +1,10 @@
 @extends('auth.layouts.master')
 
-@section('title', 'Категория ' . $category->name)
+@section('title', 'Свойство ' . $property->name)
 
 @section('content')
     <div class="col-md-12">
-        <h1>Категория Бытовая техника</h1>
+        <h1>Свойство {{$property->name}}</h1>
         <table class="table">
             <tbody>
             <tr>
@@ -17,37 +17,20 @@
             </tr>
             <tr>
                 <td>ID</td>
-                <td>{{ $category->id }}</td>
-            </tr>
-            <tr>
-                <td>Код</td>
-                <td>{{ $category->code }}</td>
+                <td>{{ $property->id }}</td>
             </tr>
             <tr>
                 <td>Название</td>
-                <td>{{ $category->name }}</td>
+                <td>{{ $property->name }}</td>
             </tr>
             <tr>
                 <td>Название en</td>
-                <td>{{ $category->name_en }}</td>
+                <td>{{ $property->name_en }}</td>
             </tr>
-            <tr>
-                <td>Описание</td>
-                <td>{{ $category->description }}</td>
-            </tr>
-            <tr>
-                <td>Описание en</td>
-                <td>{{ $category->description_en }}</td>
-            </tr>
-            <tr>
-                <td>Картинка</td>
-                <td><img src="{{Storage::url($category->image)}}"
-                         height="240px"></td>
-            </tr>
-            <tr>
-                <td>Кол-во товаров</td>
-                <td>{{ $category->products->count() }}</td>
-            </tr>
+{{--            <tr>--}}
+{{--                <td>Кол-во товаров</td>--}}
+{{--                <td>{{ $property->products->count() }}</td>--}}
+{{--            </tr>--}}
             </tbody>
         </table>
     </div>

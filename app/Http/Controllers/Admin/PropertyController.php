@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\PropertyRequest;
 use App\Models\Property;
 use Illuminate\Http\Request;
 
@@ -26,18 +27,19 @@ class PropertyController extends Controller
      */
     public function create()
     {
-        //
+        return view('auth.properties.form');
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param PropertyRequest $request
+     * @return void
      */
-    public function store(Request $request)
+    public function store(PropertyRequest $request)
     {
-        //
+        Property::create($request->all());
+        return redirect()->route('properties.index');
     }
 
     /**
@@ -48,7 +50,7 @@ class PropertyController extends Controller
      */
     public function show(Property $property)
     {
-        //
+        return view('auth.properties.show',compact('property'));
     }
 
     /**
@@ -59,19 +61,20 @@ class PropertyController extends Controller
      */
     public function edit(Property $property)
     {
-        //
+        return view('auth.properties.form',compact('property'));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Property  $property
-     * @return \Illuminate\Http\Response
+     * @param PropertyRequest $request
+     * @param \App\Models\Property $property
+     * @return void
      */
-    public function update(Request $request, Property $property)
+    public function update(PropertyRequest $request, Property $property)
     {
-        //
+        $property->update($request->all());
+        return redirect()->route('properties.index');
     }
 
     /**
@@ -82,6 +85,7 @@ class PropertyController extends Controller
      */
     public function destroy(Property $property)
     {
-        //
+        $property->delete();
+        return redirect()->route('properties.index');
     }
 }
