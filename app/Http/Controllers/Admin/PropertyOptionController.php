@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Property;
 use App\Models\PropertyOption;
 use Illuminate\Http\Request;
 
@@ -13,9 +14,10 @@ class PropertyOptionController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Property $property)
     {
-        //
+        $propertyOptions= PropertyOption::paginate(10);
+        return view('auth.property_options.index',compact('propertyOptions'));
     }
 
     /**

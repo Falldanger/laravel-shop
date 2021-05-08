@@ -27,6 +27,7 @@
                             <form action="{{ route('properties.destroy', $property) }}" method="POST">
                                 <a class="btn btn-success" type="button" href="{{ route('properties.show', $property) }}">Открыть</a>
                                 <a class="btn btn-warning" type="button" href="{{ route('properties.edit', $property) }}">Редактировать</a>
+                                <a class="btn btn-primary" type="button" href="{{ route('property-options.index', $property) }}">Значение свойства</a>
                                 @csrf
                                 @method('DELETE')
                                 <input class="btn btn-danger" type="submit" value="Удалить"></form>
