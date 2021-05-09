@@ -3,94 +3,102 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\PropertyOptionRequest;
 use App\Models\Property;
 use App\Models\PropertyOption;
-use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 
 class PropertyOptionController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
-     * @param Property $property
-     * @return Response
+     * @param  Property  $property
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function index(Property $property)
     {
-        $propertyOptions= PropertyOption::paginate(10);
-        return view('auth.property_options.index',compact('property','propertyOptions'));
+        $propertyOptions = PropertyOption::paginate(10);
+        return view('auth.property_options.index', compact('propertyOptions', 'property'));
     }
 
     /**
      * Show the form for creating a new resource.
      *
-     * @param Property $property
-     * @return Response
+     * @param  Property  $property
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function create(Property $property)
     {
-        return view('auth.property_options.form',compact('property'));
+        return view('auth.property_options.form', compact('property'));
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
-     * @param Property $property
-     * @return void
+     * @param  PropertyOptionRequest  $request
+     * @param  Property  $property
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function store(Request $request,Property $property)
+    public function store(PropertyOptionRequest $request, Property $property)
     {
         $params = $request->all();
-        $params['property_id']=$request->property->id;
-        PropertyOption::create($params);
+        $params['property_id'] = $request->property->id;
 
-        return redirect()->route('property-options.index',$property);
+        PropertyOption::create($params);
+        return redirect()->route('property-options.index', $property);
     }
 
     /**
      * Display the specified resource.
      *
+     * @param  Property  $property
      * @param  \App\Models\PropertyOption  $propertyOption
-     * @return Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function show(PropertyOption $propertyOption)
+    public function show(Property $property, PropertyOption $propertyOption)
     {
-        //
+        return view('auth.property_options.show', compact('propertyOption'));
     }
 
     /**
      * Show the form for editing the specified resource.
      *
      * @param  \App\Models\PropertyOption  $propertyOption
-     * @return Response
+     * @param  Property  $property
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function edit(PropertyOption $propertyOption)
+    public function edit(Property $property, PropertyOption $propertyOption)
     {
-        //
+        return view('auth.property_options.form', compact('propertyOption', 'property'));
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
+     * @param  Property  $property
      * @param  \App\Models\PropertyOption  $propertyOption
-     * @return Response
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(Request $request, PropertyOption $propertyOption)
+    public function update(PropertyOptionRequest $request, Property $property, PropertyOption $propertyOption)
     {
-        //
+        $params = $request->all();
+
+        $propertyOption->update($params);
+        return redirect()->route('property-options.index', $property);
     }
 
     /**
      * Remove the specified resource from storage.
      *
+     * @param  Property  $property
      * @param  \App\Models\PropertyOption  $propertyOption
-     * @return Response
+     * @return \Illuminate\Http\RedirectResponse
+     * @throws \Exception
      */
-    public function destroy(PropertyOption $propertyOption)
+    public function destroy(Property $property, PropertyOption $propertyOption)
     {
-        //
+        $propertyOption->delete();
+        return redirect()->route('property-options.index', $property);
     }
 }

@@ -13,7 +13,7 @@ class PropertyOptionRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,9 @@ class PropertyOptionRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            //'property_id' => ['required', 'exists:properties,id'],
+            'name' => ['required'],
+            'name_en' => ['required']
         ];
     }
 }
