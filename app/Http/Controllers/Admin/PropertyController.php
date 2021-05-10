@@ -23,7 +23,7 @@ class PropertyController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function create()
     {
@@ -34,7 +34,7 @@ class PropertyController extends Controller
      * Store a newly created resource in storage.
      *
      * @param PropertyRequest $request
-     * @return void
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function store(PropertyRequest $request)
     {
@@ -46,7 +46,7 @@ class PropertyController extends Controller
      * Display the specified resource.
      *
      * @param  \App\Models\Property  $property
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function show(Property $property)
     {
@@ -57,7 +57,7 @@ class PropertyController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param  \App\Models\Property  $property
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function edit(Property $property)
     {
@@ -69,7 +69,7 @@ class PropertyController extends Controller
      *
      * @param PropertyRequest $request
      * @param \App\Models\Property $property
-     * @return void
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function update(PropertyRequest $request, Property $property)
     {
@@ -81,7 +81,7 @@ class PropertyController extends Controller
      * Remove the specified resource from storage.
      *
      * @param  \App\Models\Property  $property
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function destroy(Property $property)
     {
