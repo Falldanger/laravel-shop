@@ -44,7 +44,7 @@
                 </div>
                 <br>
                 <div class="input-group row">
-                    <label for="name_en" class="col-sm-2 col-form-label">Название en: </label>
+                    <label for="name" class="col-sm-2 col-form-label">Название en: </label>
                     <div class="col-sm-6">
                         @include('auth.layouts.error', ['fieldName' => 'name_en'])
                         <input type="text" class="form-control" name="name_en" id="name_en"
@@ -80,7 +80,7 @@
                 </div>
                 <br>
                 <div class="input-group row">
-                    <label for="description_en" class="col-sm-2 col-form-label">Описание en: </label>
+                    <label for="description" class="col-sm-2 col-form-label">Описание en: </label>
                     <div class="col-sm-6">
                         @include('auth.layouts.error', ['fieldName' => 'description_en'])
                         <textarea name="description_en" id="description_en" cols="72"
@@ -97,6 +97,26 @@
                     </div>
                 </div>
                 <br>
+
+                <div class="input-group row">
+                    <label for="category_id" class="col-sm-2 col-form-label">Свойства товара: </label>
+                    <div class="col-sm-6">
+                        @include('auth.layouts.error', ['fieldName' => 'property_id[]'])
+                        <select name="property_id[]" multiple>
+                            @foreach($properties as $property)
+                                <option value="{{ $property->id }}"
+                                        @isset($product)
+                                        @if($product->properties->contains($property->id))
+                                        selected
+                                    @endif
+                                    @endisset
+                                >{{ $property->name }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                </div>
+                <br>
+
                 @foreach ([
                 'hit' => 'Хит',
                 'new' => 'Новинка',
@@ -107,7 +127,7 @@
                         <div class="col-sm-10">
                             <input type="checkbox" name="{{$field}}" id="{{$field}}"
                                    @if(isset($product) && $product->$field === 1)
-                                   checked="checked"
+                                   checked="'checked"
                                 @endif
                             >
                         </div>

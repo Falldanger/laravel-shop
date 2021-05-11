@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Models\Category;
-use App\Models\Product;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ProductRequest;
+use App\Models\Category;
+use App\Models\Product;
+use App\Models\Property;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -14,7 +15,7 @@ class ProductController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return \Illuminate\Http\Response
      */
     public function index()
     {
@@ -25,19 +26,20 @@ class ProductController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return \Illuminate\Http\Response
      */
     public function create()
     {
         $categories = Category::get();
-        return view('auth.products.form', compact('categories'));
+        $properties = Property::get();
+        return view('auth.products.form', compact('categories', 'properties'));
     }
 
     /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\RedirectResponse
+     * @return \Illuminate\Http\Response
      */
     public function store(ProductRequest $request)
     {
@@ -56,7 +58,7 @@ class ProductController extends Controller
      * Display the specified resource.
      *
      * @param  \App\Product  $product
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return \Illuminate\Http\Response
      */
     public function show(Product $product)
     {
@@ -67,12 +69,13 @@ class ProductController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param  \App\Product  $product
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return \Illuminate\Http\Response
      */
     public function edit(Product $product)
     {
         $categories = Category::get();
-        return view('auth.products.form', compact('product', 'categories'));
+        $properties = Property::get();
+        return view('auth.products.form', compact('product', 'categories', 'properties'));
     }
 
     /**
@@ -80,7 +83,7 @@ class ProductController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \App\Product  $product
-     * @return \Illuminate\Http\RedirectResponse
+     * @return \Illuminate\Http\Response
      */
     public function update(ProductRequest $request, Product $product)
     {
@@ -97,6 +100,7 @@ class ProductController extends Controller
             }
         }
 
+        $product->properties()->sync($request->property_id);
 
         $product->update($params);
         return redirect()->route('products.index');
@@ -106,7 +110,7 @@ class ProductController extends Controller
      * Remove the specified resource from storage.
      *
      * @param  \App\Product  $product
-     * @return \Illuminate\Http\RedirectResponse
+     * @return \Illuminate\Http\Response
      */
     public function destroy(Product $product)
     {
