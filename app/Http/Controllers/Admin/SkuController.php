@@ -25,11 +25,11 @@ class SkuController extends Controller
      * Show the form for creating a new resource.
      *
      * @param Product $product
-     * @return void
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function create(Product $product)
     {
-        //
+       return view('auth.skus.form',compact('product'));
     }
 
     /**
