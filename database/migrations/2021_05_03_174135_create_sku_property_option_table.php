@@ -28,6 +28,6 @@ class CreateSkuPropertyOptionTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('sku_product');
+        Schema::dropIfExists('sku_property_option');
     }
 }

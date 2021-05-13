@@ -1,10 +1,11 @@
 @extends('auth.layouts.master')
 
-@section('title', 'Свойство ' . $property->name)
+@section('title', 'Sku ' . $sku->name)
 
 @section('content')
     <div class="col-md-12">
-        <h1>Свойство {{$property->name}}</h1>
+        <h1>Sku {{ $sku->product->name }}</h1>
+        <h2>{{ $sku->propertyOptions->map->name->implode(', ') }}</h2>
         <table class="table">
             <tbody>
             <tr>
@@ -17,20 +18,16 @@
             </tr>
             <tr>
                 <td>ID</td>
-                <td>{{ $property->id }}</td>
+                <td>{{ $sku->id }}</td>
             </tr>
             <tr>
-                <td>Название</td>
-                <td>{{ $property->name }}</td>
+                <td>Цена</td>
+                <td>{{ $sku->price }}</td>
             </tr>
             <tr>
-                <td>Название en</td>
-                <td>{{ $property->name_en }}</td>
+                <td>Кол-во</td>
+                <td>{{ $sku->count }}</td>
             </tr>
-{{--            <tr>--}}
-{{--                <td>Кол-во товаров</td>--}}
-{{--                <td>{{ $property->products->count() }}</td>--}}
-{{--            </tr>--}}
             </tbody>
         </table>
     </div>
