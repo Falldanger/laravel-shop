@@ -15,7 +15,7 @@ class SkuController extends Controller
      * Display a listing of the resource.
      *
      * @param  Product  $product
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function index(Product $product)
     {
@@ -27,7 +27,7 @@ class SkuController extends Controller
      * Show the form for creating a new resource.
      *
      * @param  Product  $product
-     * @return void
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function create(Product $product)
     {
@@ -39,7 +39,7 @@ class SkuController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  Product  $product
-     * @return void
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function store(SkuRequest $request, Product $product)
     {
@@ -55,7 +55,7 @@ class SkuController extends Controller
      *
      * @param  Product  $product
      * @param  Sku  $sku
-     * @return void
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function show(Product $product, Sku $sku)
     {
@@ -67,7 +67,7 @@ class SkuController extends Controller
      *
      * @param  Product  $product
      * @param  Sku  $sku
-     * @return void
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function edit(Product $product, Sku $sku)
     {
@@ -80,7 +80,7 @@ class SkuController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @param  Product  $product
      * @param  Sku  $sku
-     * @return void
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function update(Request $request, Product $product, Sku $sku)
     {
@@ -96,7 +96,7 @@ class SkuController extends Controller
      *
      * @param  Product  $product
      * @param  Sku  $sku
-     * @return void
+     * @return \Illuminate\Http\RedirectResponse
      * @throws \Exception
      */
     public function destroy(Product $product, Sku $sku)
