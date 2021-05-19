@@ -17,4 +17,9 @@ class Sku extends Model
     {
         return $this->belongsToMany(PropertyOption::class, 'sku_property_option')->withTimestamps();
     }
+
+    public function isAvailable()
+    {
+        return !$this->product->trashed() && $this->count > 0;
+    }
 }

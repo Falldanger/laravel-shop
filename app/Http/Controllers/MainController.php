@@ -7,6 +7,7 @@ use App\Models\Category;
 use App\Models\Currency;
 use App\Models\Product;
 use App\Http\Requests\ProductsFilterRequest;
+use App\Models\Sku;
 use App\Models\Subscription;
 use Illuminate\Support\Facades\App;
 
@@ -14,25 +15,27 @@ class MainController extends Controller
 {
     public function index(ProductsFilterRequest $request)
     {
-        $productsQuery = Product::with('category');
+        $skusQuery = Sku::with(['product', 'product.category']);
 
         if ($request->filled('price_from')) {
-            $productsQuery->where('price', '>=', $request->price_from);
+            $skusQuery->where('price', '>=', $request->price_from);
         }
 
         if ($request->filled('price_to')) {
-            $productsQuery->where('price', '<=', $request->price_to);
+            $skusQuery->where('price', '<=', $request->price_to);
         }
 
         foreach (['hit', 'new', 'recommend'] as $field) {
             if ($request->has($field)) {
-                $productsQuery->$field();
+                $skusQuery->whereHas('product', function ($query) use ($field) {
+                    $query->$field();
+                });
             }
         }
 
-        $products = $productsQuery->paginate(6)->withPath("?" . $request->getQueryString());
+        $skus = $skusQuery->paginate(6)->withPath("?".$request->getQueryString());
 
-        return view('index', compact('products'));
+        return view('index', compact('skus'));
     }
 
     public function categories()
