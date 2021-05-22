@@ -33,7 +33,7 @@ class MainController extends Controller
             }
         }
 
-        $skus = $skusQuery->paginate(6)->withPath("?".$request->getQueryString());
+        $skus = $skusQuery->paginate(6)->withPath("?" . $request->getQueryString());
 
         return view('index', compact('skus'));
     }
@@ -49,9 +49,16 @@ class MainController extends Controller
         return view('category', compact('category'));
     }
 
-    public function product($category, $productCode)
+    public function sku($categoryCode, $productCode, Sku $skus)
     {
-        $product = Product::withTrashed()->ByCode($productCode)->firstOrFail();
+        if ($skus->product->code != $productCode) {
+            abort(404);
+        }
+
+        if ($skus->category->code != $categoryCode) {
+            abort(404);
+        }
+
         return view('product', compact('product'));
     }
 
@@ -67,8 +74,8 @@ class MainController extends Controller
 
     public function changeLocale($locale)
     {
-        $availableLocales = ['en','ru'];
-        if (!in_array($locale,$availableLocales)){
+        $availableLocales = ['en', 'ru'];
+        if (!in_array($locale, $availableLocales)) {
             $locale = config('app.locale');
         }
         session(['locale' => $locale]);
