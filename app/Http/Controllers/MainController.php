@@ -55,11 +55,11 @@ class MainController extends Controller
             abort(404);
         }
 
-        if ($skus->category->code != $categoryCode) {
+        if ($skus->product->category->code != $categoryCode) {
             abort(404);
         }
 
-        return view('product', compact('product'));
+        return view('product', compact('skus'));
     }
 
     public function subscribe(SubscriptionRequest $request, Product $product)
